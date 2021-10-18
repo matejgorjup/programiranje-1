@@ -1,3 +1,4 @@
+import re
 ###############################################################################
 # Hvaležni medved
 #
@@ -26,6 +27,10 @@ medved. Zvrhano zibelko sladkih hrušk mi je prinesel za en sam izdrt trn"."""
 # {'izdere', 'debel', 'oddide', 'začudeno'}
 ###############################################################################
 
+def find_word(besedilo, podniz):
+    vzorec = r"\b\w*" + podniz + r"\w*\b"
+    m = re.findall(vzorec, besedilo)
+    return set(m)
 
 ###############################################################################
 # 2) Sestavite funkcijo [find_prefix], ki vrne množico vseh besed, ki se
@@ -35,6 +40,10 @@ medved. Zvrhano zibelko sladkih hrušk mi je prinesel za en sam izdrt trn"."""
 # {'zibala', 'zibel', 'zibelko'}
 ###############################################################################
 
+def find_prefix(besedilo, prefix):
+    vzorec = prefix + r"\b\w+"
+    m = re.findall(vzorec, besedilo)
+    return set(m)
 
 ###############################################################################
 # 3) Sestavite funkcijo [find_suffix], ki vrne množico vseh besed, ki se
@@ -44,6 +53,10 @@ medved. Zvrhano zibelko sladkih hrušk mi je prinesel za en sam izdrt trn"."""
 # {'zibala', 'razveselila', 'prestrašila', 'šivala', 'opazila', 'tla'}
 ###############################################################################
 
+def find_suffix(besedilo, suffix):
+    vzorec = r"\b\w+" + suffix
+    m = re.findall(vzorec, besedilo)
+    return set(m)
 
 ###############################################################################
 # 4) Sestavite funkcijo [double_letters], ki sprejme niz in vrne množico vseh
@@ -52,3 +65,13 @@ medved. Zvrhano zibelko sladkih hrušk mi je prinesel za en sam izdrt trn"."""
 # >>> double_letters('A volunteer is worth twenty pressed men.')
 # {'volunteer', 'pressed'}
 ###############################################################################
+
+def double_letters(niz):
+    vzorec = r"(\b\w*(\w)\2\w*\b)"
+    m = re.findall(vzorec, niz)
+    
+    #return set(m)   #vrne kar je v grupah kot tuple
+
+    return {
+        g[0] for g in m
+    }
