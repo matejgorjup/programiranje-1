@@ -16,6 +16,7 @@ Možne dopolnitve dobimo s tipko `Tab`, dokumentacijo pa s `Shift+Tab`.
 
 Za zagon uporabite ukaz `jupyter notebook`, ki bi moral odpreti novo okno ali
 zavihek vašega spletnega brskalnika.
+Alternativni način za zagon je ukaz `py -m notebook`.
 
 ### Naloge:
 
