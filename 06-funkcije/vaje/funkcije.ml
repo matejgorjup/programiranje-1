@@ -9,12 +9,12 @@ let rec reverse = function
   | x :: xs -> (reverse xs) @ [x]
 
 let reverse l = 
-  let rec reverse_aux acc list = 
+  let rec aux acc list = 
     match list with
     | [] -> acc
-    | x :: xs -> reverse_aux (x::acc) xs 
+    | x :: xs -> aux (x :: acc) xs 
   in 
-  reverse_aux [] l
+  aux [] l
 
 (*----------------------------------------------------------------------------*]
  Funkcija [repeat x n] vrne seznam [n] ponovitev vrednosti [x]. Za neprimerne
@@ -29,6 +29,12 @@ let reverse l =
 let rec repeat x n =
   if n <= 0 then [] else x :: (repeat x (n-1))
 
+let repeat' x n =
+  let rec aux acc x n =
+  	if n <= 0 then acc else aux (x :: acc) x (n-1)
+  in
+  aux [] x n 
+  
 (*----------------------------------------------------------------------------*]
  Funkcija [range] sprejme število in vrne seznam vseh celih števil od 0 do
  vključno danega števila. Za neprimerne argumente funkcija vrne prazen seznam.

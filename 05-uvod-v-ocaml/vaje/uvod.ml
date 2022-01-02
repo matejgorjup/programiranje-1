@@ -156,7 +156,11 @@ let rec rotate n list =
  - : int list = [2; 3; 2; 3]
 [*----------------------------------------------------------------------------*)
 
-let rec remove = ()
+let rec remove a list =
+  match list with
+  | [] -> []
+  | x :: xs -> 
+    if x != a then x :: xs else x :: remove a xs 
 
 (*----------------------------------------------------------------------------*]
  Funkcija [is_palindrome] za dani seznam ugotovi ali predstavlja palindrom.
@@ -168,7 +172,11 @@ let rec remove = ()
  - : bool = false
 [*----------------------------------------------------------------------------*)
 
-let rec is_palindrome = ()
+let rec is_palindrome = 
+  function 
+  | [] -> []
+  | x :: xs -> 
+    
 
 (*----------------------------------------------------------------------------*]
  Funkcija [max_on_components] sprejme dva seznama in vrne nov seznam, katerega
