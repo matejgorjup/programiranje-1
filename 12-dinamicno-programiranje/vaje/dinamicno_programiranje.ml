@@ -21,6 +21,18 @@ let test_matrix =
      [| 2 ; 4 ; 5 |];
      [| 7 ; 0 ; 1 |] |]
 
+
+let max_cheese mat =
+   let leny = Array.length mat
+   and lenx = Array.length mat.(0) in
+   let rec optimalna (x, y) =
+      let trenutno = mat.(y).(x) in
+      let desno = if x + 1 > lenx then 0 else optimalna (x + 1, y) in
+      let dol = if y + 1 > leny then 0 else optimalna (x, y + 1) in
+   trenutno + max desno dol
+   in optimalna (0, 0)
+
+
 (*----------------------------------------------------------------------------*]
  Poleg količine sira, ki jo miška lahko poje, jo zanima tudi točna pot, ki naj
  jo ubere, da bo prišla do ustrezne pojedine.
@@ -38,6 +50,37 @@ let test_matrix =
 
 type mouse_direction = Down | Right
 
+(*d (x, y) = max d (x+1, y) d (x, y+1) *)
+
+let optimal_path_bottom matrix =
+   let rec aux vrst stol = 
+      let current = matrix.(vrst).(stol) in
+      (*desno*)
+      let max_desno, pot_desno =
+         if stol + 1 < Array.length matrix.(0) then
+            let best, pot = aux vrst (stol+1) in
+            best, pot
+         else 
+            (0, [])
+      in
+      (*dol*)
+      let max_dol, pot_dol =
+         if vrst + 1 < Array.length matrix.(0) then
+            let best, pot = aux (vrst+1) stol in
+            best, pot
+         else 
+            (0, [])
+      in
+      let max_pot =
+         if max_dol > max_desno then
+            Down::pot_dol
+         else
+            Right::pot_desno
+      in
+      (current + (max max_dol max_desno), max_pot)
+   in
+   let (_, pot) = aux 0 0 in
+   pot
 
 (*----------------------------------------------------------------------------*]
  Rešujemo problem sestavljanja alternirajoče obarvanih stolpov. Imamo štiri
@@ -55,7 +98,19 @@ type mouse_direction = Down | Right
  - : int = 35
 [*----------------------------------------------------------------------------*)
 
+(*vzajemno rekurzivne funcije*)
 
+let alternating_towers h = 
+   let rec konec_modri h =
+      if h = 0 then 0
+      else if h<#   then 1
+
+      else konec_rdeci (h - 2) + konec_rdeci (h - 3)
+   and konec_rdeci h = 
+      if h = 0 then 0
+      else if h <= 2 then 1
+      else konec_modri (h - 1) + konec_modri (h - 2)
+   in konec_rdeci h + konec_modri h 
 
 (*----------------------------------------------------------------------------*]
  Izračunali smo število stolpov, a naše vrle gradbince sedaj zanima točna

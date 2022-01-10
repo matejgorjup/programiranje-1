@@ -34,7 +34,7 @@ let repeat' x n =
   	if n <= 0 then acc else aux (x :: acc) x (n-1)
   in
   aux [] x n 
-  
+
 (*----------------------------------------------------------------------------*]
  Funkcija [range] sprejme število in vrne seznam vseh celih števil od 0 do
  vključno danega števila. Za neprimerne argumente funkcija vrne prazen seznam.
@@ -78,7 +78,13 @@ let rec map f list =
  - : int list = [2; 3; 4; 5; 6]
 [*----------------------------------------------------------------------------*)
 
-let rec map_tlrec = ()
+let map_tlrec f list =
+  let rec aux acc l =
+    match l with
+    | [] -> reverse acc
+    | x :: xs -> aux (f x :: acc) xs
+    in
+    aux [] list
 
 (*----------------------------------------------------------------------------*]
  Funkcija [mapi] je ekvivalentna python kodi:
@@ -132,7 +138,13 @@ let rec zip l1 l2 =
  - : int list * string list = ([0; 1; 2], ["a"; "b"; "c"])
 [*----------------------------------------------------------------------------*)
 
-let rec unzip = ()
+let rec unzip = 
+  function
+  | [] -> ([], [])
+  | (x, y) :: rest ->
+    let (l1, l2) = unzip rest
+    in
+    (x :: l1, y :: l2) 
 
 (*----------------------------------------------------------------------------*]
  Funkcija [unzip_tlrec] je repno rekurzivna različica funkcije [unzip].
